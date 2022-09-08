@@ -1,8 +1,10 @@
 ---
 title: "Lab 1 - Data visualization"
-author: "[INSERT NAME]"
+author: "Siqi Lan"
 format: pdf
 editor: visual
+editor_options: 
+  chunk_output_type: console
 ---
 
 ## Load Packages
@@ -12,27 +14,79 @@ editor: visual
 #| message: false
 
 library(tidyverse)
+library(viridis)
+```
+```{r}
+#| label: load-data
+data(midwest)
+view(midwest)
 ```
 
 ## Exercise 1
 
 (Type your answer to Exercise 1 here. Add code chunks as needed. Don't forget to label your code chunk. Do not use spaces in code chunk labels.)
 
+```{r}
+#| label: histogram-ex1
+#| message: false
+ggplot(data = midwest,
+       aes(x = popdensity)) +
+  geom_histogram(binwidth = 10000) +
+  labs(x = "Population density (person/unit area)", 
+       y = "Number of Counties", 
+       title = "The Population Density of Counties")
+```
+1) Describe the shape of the distribution.
+  The distribution is right skewed.
+2) Does there appear to be any outliers? Briefly explain.
+  Yes, from the histgram we can detect that there are some extremely high density around 87500 people per area.
+
 ## Exercise 2
 
 (Type your answer to Exercise 2 here. Add code chunks as needed. Don't forget to label your code chunk. Do not use spaces in code chunk labels.)
+
+```{r}
+#| label: histogram-ex2 
+#| message: false
+ggplot(data = midwest,
+       aes(x = percollege, y = percbelowpoverty, color = state)) +
+  geom_point() +
+  labs(x = "Percentage of People with a College Degree", 
+       y = "Percentage below Poverty", 
+       title = "Percentage of People with a College Degree \nVersus 
+Percentage below Poverty") +
+  scale_color_viridis_d(option = "A", end = 0.8) +
+  theme_minimal()
+```
 
 ## Exercise 3
 
 (Type your answer to Exercise 3 here. Add code chunks as needed. Don't forget to label your code chunk. Do not use spaces in code chunk labels.)
 
+```{r}
+
+```
+
 ## Exercise 4
 
+```{r}
+
+```
 
 ## Exercise 5
 
+```{r}
+
+```
 
 ## Exercise 6
 
+```{r}
+
+```
 
 ## Exercise 7
+
+```{r}
+
+```
