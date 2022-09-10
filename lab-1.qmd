@@ -73,6 +73,8 @@ The scattered points are telling the story that there is a negative relationship
 ## Exercise 4
 
 ```{r}
+#| label: smooth-ex4
+#| message: false
 ggplot(data = midwest,
        aes(x = percollege, y = percbelowpoverty, color = state)) +
   geom_smooth(se = FALSE) +
@@ -90,17 +92,42 @@ Compared with the plot in Ex.2, I prefer the plot in Ex.4 since it can convey a 
 ## Exercise 5
 
 ```{r}
+#| label: boxplot-ex5 
+#| message: false
 
+ggplot(data = midwest, 
+       mapping = aes(y = area, group = state, fill = state)) +
+  geom_boxplot(show.legend = T)
 ```
 
 ## Exercise 6
 
 ```{r}
+#| label: barchart-ex6
+#| message: false
+
+
 
 ```
 
 ## Exercise 7
 
 ```{r}
+#| label: boxplot-ex7
+#| message: false
+#| fig-height: 5
+#| fig-width: 7
 
+
+ggplot(data = midwest, 
+       mapping = aes(x = percollege, y = popdensity, color = percbelowpoverty)) +
+  geom_point(size = 2, alpha = 0.5, show.legend = T) + 
+  facet_wrap(~state) + 
+  labs(x = "% college educated", 
+       y = "Population density (person / unit area)", 
+       title = "Do people with college degrees tend to live in denser areas?",
+       color = "% below \npoverty line"
+  ) + 
+  theme_minimal()
+  
 ```
