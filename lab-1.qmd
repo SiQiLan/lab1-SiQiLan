@@ -59,7 +59,8 @@ ggplot(data = midwest,
   labs(x = "Percentage of People with a College Degree", 
        y = "Percentage below Poverty", 
        title = "Percentage of People with a College Degree \nVersus 
-Percentage below Poverty") +
+Percentage below Poverty",
+       color = "State") +
   scale_color_viridis_d(option = "D", end = 1) +
   theme_minimal()
 ```
@@ -77,17 +78,19 @@ The scattered points are telling the story that there is a negative relationship
 #| message: false
 ggplot(data = midwest,
        aes(x = percollege, y = percbelowpoverty, color = state)) +
+  geom_point() +
   geom_smooth(se = FALSE) +
   facet_wrap(~state) +
   labs(x = "Percentage of People with a College Degree", 
        y = "Percentage below Poverty", 
        title = "Percentage of People with a College Degree \nVersus 
-Percentage below Poverty") +
+Percentage below Poverty",
+       color = "State") +
   scale_color_viridis_d(option = "D", end = 1) +
   theme_minimal()
 ```
 
-Compared with the plot in Ex.2, I prefer the plot in Ex.4 since it can convey a clearer relationship of these two variables without the influence from outliers. Also, With subplots of each state, more specifically negative relationships of these states can be told by audiences.
+Compared with the plot in Ex.2, I prefer the plot in Ex.4 since it can convey a much clearer relationship of these two variables without some influence from outliers. Also, With subplots of each state, more specifically negative relationships of these states can be told by audiences.
 
 ## Exercise 5
 
@@ -96,19 +99,42 @@ Compared with the plot in Ex.2, I prefer the plot in Ex.4 since it can convey a 
 #| message: false
 
 ggplot(data = midwest, 
-       mapping = aes(y = area, group = state, fill = state)) +
-  geom_boxplot(show.legend = T)
+       mapping = aes(x = state, y = area, group = state, fill = state)) +
+  geom_boxplot(show.legend = T) + 
+  labs(x = "State", 
+       y = "Area", 
+       title = "Area of County Based on State",
+       fill = 'State')
 ```
 
+1\) From the boxplot, we can easily find out that WI has the mean maximum area and its box is higher than other states'; IN has the mean minimum area and its box is lower and smaller than others', which also has the most outliers recognized by R; MI has the medium area and the highest outlier, but its Q2 (median) is too close to Q1 (25th Percentile) and far from Q3 (75th Percentile); IL has similar Q2 as MI but it has a lower Q3; and OH's box is just a little higher than IN's, with some close outliers. Therefore, WI seems to have counties that tend to be geographically larger than others as its box is higher than others'.
+
+2\) MI state seems to have the single largest county as it has the highest point shown in the plot , which is regarded to be a potential outlier by R.
+
 ## Exercise 6
+
+```{r}
+#| label: data-ex6
+#| message: false
+
+midwest <- midwest |>
+  mutate(metro = if_else(inmetro == 1, "Yes", "No"))
+```
 
 ```{r}
 #| label: barchart-ex6
 #| message: false
 
-
-
+ggplot(data = midwest, 
+       mapping = aes(x = state, fill = metro)) +
+  geom_bar(position="fill", show.legend = T) + 
+  labs(x = "State", 
+       y = "% counties located in a metropolitan area", 
+       title = "Percentage of states' counties \nlocated in a metropolitan area",
+       fill = 'Metro')
 ```
+
+From the plot, it is obvious that OH has a highest percentage of their counties located in a metropolitan area and IN has the second highest percentage. For the other three states, their share a similar low percentage of their counties located in a metropolitan area which is hard to tell directly.
 
 ## Exercise 7
 
@@ -126,8 +152,7 @@ ggplot(data = midwest,
   labs(x = "% college educated", 
        y = "Population density (person / unit area)", 
        title = "Do people with college degrees tend to live in denser areas?",
-       color = "% below \npoverty line"
-  ) + 
+       color = "% below \npoverty line") + 
   theme_minimal()
   
 ```
